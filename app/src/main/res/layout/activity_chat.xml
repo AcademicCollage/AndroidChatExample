@@ -26,14 +26,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:lottie_rawRes="@raw/empty"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_chat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
         app:lottie_autoPlay="true"
-        app:lottie_speed="0.5"
-        app:lottie_loop="true"/>
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/empty"
+        app:lottie_speed="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -59,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/recycler_chat">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/send_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
@@ -70,7 +75,7 @@
             app:srcCompat="@android:drawable/ic_menu_send" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/message_to_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
