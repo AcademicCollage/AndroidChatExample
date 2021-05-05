@@ -2,6 +2,8 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,15 +13,22 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 
 import com.example.myapplication.objects.User;
+import com.example.myapplication.screens.Chat;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EditText phone,name,password;
     private AutoCompleteTextView gender;
+    private SharedPreferences sharedPreferences;
     private Button login;
     private void init() {
         initAutoComplete();
+        sharedPreferences=getSharedPreferences("userData",MODE_PRIVATE);
+        if(sharedPreferences.getString("phone","").length()>0){
+            goToNextActivity();
+        }
         phone=findViewById(R.id.phone_number);
         name=findViewById(R.id.name);
         password=findViewById(R.id.password);
@@ -33,12 +42,26 @@ public class MainActivity extends AppCompatActivity {
                         set(new User(name.getText().toString(),
                                 password.getText().toString(),
                                 phone.getText().toString(),
-                                gender.getText().toString()));
+                                gender.getText().toString())).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        sharedPreferences.edit().putString("phone",phone.getText().toString()).apply();
+                        goToNextActivity();
+
+                    }
+                });
             }
         });
 
 
     }
+
+    private void goToNextActivity() {
+        Intent intent=new Intent(MainActivity.this, Chat.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
